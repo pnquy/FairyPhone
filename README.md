@@ -38,7 +38,9 @@ Use the following commands to build and run the application:
   dotnet run
   ```
 The application will be accessible at http://localhost:5000 by default.
-
+### Admin Account
+Account: admin@gmail.com
+Password: 123
 ### Usage
 Visit the application in your web browser and explore the provided functionality.
 

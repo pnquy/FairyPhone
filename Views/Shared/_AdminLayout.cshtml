@@ -13,10 +13,13 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block">
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block" style="background-color: black;">
                 <div id="sidebar-header">
-                    <span class="h1 text-uppercase text-primary bg-dark px-2">We</span>
-                    <span class="h1 text-uppercase text-dark bg-primary px-2 ms-n1">Phone</span>
+                    <div class="" style="display: flex; ">
+                        <a href="" class="text-decoration-none">
+                            <img src="~/img/logo.png" alt="Mô tả ảnh" class="img-fluid" />
+                        </a>
+                    </div>
                 </div>
                 <div class="position-sticky">
                     <ul class="nav flex-column">
@@ -27,7 +30,7 @@
                            @*  <div class="collapse" id="productCollapse"> *@
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Admin" asp-action="ProductCRUD">Product</a>
+                                        <a class="nav-link" style="color: white;" asp-controller="Admin" asp-action="ProductCRUD">Product</a>
                                     </li>
                                 </ul>
                             @* </div> *@
@@ -39,22 +42,26 @@
                             @*  <div class="collapse" id="productCollapse"> *@
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-controller="Admin" asp-action="ContactMessages">Contact</a>
+                                    <a class="nav-link" style="color: white;" asp-controller="Admin"
+                                        asp-action="ContactMessages">Contact</a>
                                 </li>
                             </ul>
                             @* </div> *@
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#userCollapse" role="button" aria-expanded="false" aria-controls="userCollapse">
+                            <a class="nav-link" style="color: white;" data-bs-toggle="collapse" href="#userCollapse"
+                                role="button" aria-expanded="false" aria-controls="userCollapse">
                                 User
                             </a>
                             <div class="collapse" id="userCollapse">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Admin" asp-action="Info">Info</a>
+                                        <a style="color: white;" class="nav-link" asp-controller="Admin"
+                                            asp-action="Info">Info</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Admin" asp-action="Invoices">Invoices</a>
+                                        <a style="color: white;" class="nav-link" asp-controller="Admin"
+                                            asp-action="Invoices">Invoices</a>
                                     </li>
                                 </ul>
                             </div>
@@ -73,7 +80,8 @@
                         </li> *@
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Logout">LogOut</a>
+                            <a class="nav-link" style="color: white;" asp-area="" asp-controller="Admin"
+                                asp-action="Logout">LogOut</a>
                         </li>
                         
                     </ul>
