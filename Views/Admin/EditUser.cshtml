@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewData["Title"] = "EditUser";
+}
+@{
+
+    Layout = "../Shared/_AdminLayout.cshtml";
+}
+
+@model User
+
+<h1>Edit User</h1>
+<!-- Bootstrap Modal -->
+<div id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <a asp-controller="Admin" asp-action="RedirectToInfo"  class="info-button">Close</a>
+                    
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your form controls here -->
+                <input type="hidden" id="Id" class="form-control" value="@Model.Id">
+
+                <label for="Username">Username:</label>
+                <input type="text" id="Username" class="form-control" value="@Model.Username">
+
+                <label for="Password">Password:</label>
+                <input type="text" id="Password" class="form-control"value="@Model.Password">
+
+                <label for="Full_Name">Full name:</label>
+                <input type="text" id="Full_Name" class="form-control" value="@Model.Full_Name">
+
+                <label for="Email">Email:</label>
+                <input type="text" id="Email" class="form-control"value="@Model.Email">
+
+                <label for="Phone_Number">Phone Number:</label>
+                <input type="text" id="Phone_Number" class="form-control"value="@Model.Phone_Number">
+
+                <label for="Province_City">Province/City:</label>
+                <input type="text" id="Province_City" class="form-control"value="@Model.Province_City">
+
+                <label for="District">District:</label>
+                <input type="text" id="District" class="form-control"value="@Model.District">
+
+                <label for="Ward">Ward:</label>
+                <input type="text" id="Ward" class="form-control"value="@Model.Ward">
+
+                <label for="Specific_Address">Specific Address:</label>
+                <input type="text" id="Specific_Address" class="form-control"value="@Model.Specific_Address">
+            </div>
+            <div class="modal-footer">
+                <a onclick="deleteUser()" class="btn btn-primary">Delete</a>
+                <a onclick="submitForm()" class="btn btn-primary">Submit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+           function submitForm() {
+                // Prepare data to be sent to the server
+                var data = { 
+                        Id:$('#Id').val(),
+                        Username: $('#Username').val(),
+                        Password: $('#Password').val(),
+                        Full_Name: $('#Full_Name').val(),
+                        Email: $('#Email').val(),
+                        Phone_Number: $('#Phone_Number').val(),
+                        Province_City: $('#Province_City').val(),
+                        District: $('#District').val(),
+                        Ward: $('#Ward').val(),
+                        Specific_Address: $('#Specific_Address').val()
+                    
+                };
+
+                // Send an AJAX request to update the user data
+                $.ajax({
+                    url: '/Admin/UpdateUser',
+                    type: 'POST',
+                    data: data,
+                    success: function (result,textResult,xhr) {
+                        alert(result);
+                            window.location.href = '/Admin/Info';
+                    },
+                });
+            }
+        </script>
+        <script>
+            function deleteUser()
+            {
+                     var data = { 
+                            Id:$('#Id').val(),
+                            Username: $('#Username').val(),
+                            Password: $('#Password').val(),
+                            Full_Name: $('#Full_Name').val(),
+                            Email: $('#Email').val(),
+                            Phone_Number: $('#Phone_Number').val(),
+                            Province_City: $('#Province_City').val(),
+                            District: $('#District').val(),
+                            Ward: $('#Ward').val(),
+                            Specific_Address: $('#Specific_Address').val()
+
+                    };
+                         $.ajax({
+                        url: '/Admin/DeleteUser',
+                        type: 'POST',
+                        data: data,
+                        success: function (result,textResult,xhr) {
+                            alert(result);
+                                window.location.href = '/Admin/Info';
+                        },
+                    });
+
+            };
+        </script>
+}
+
+
+
+

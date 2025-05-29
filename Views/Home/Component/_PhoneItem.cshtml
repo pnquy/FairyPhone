@@ -1,0 +1,28 @@
+﻿@model FairyPhone.Models.Smartphone
+
+<div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+    <div class="product-item bg-light mb-4">
+        <div class="product-img position-relative overflow-hidden d-flex align-items-center justify-content-center">
+            <img class="img-fluid" src="@Model.Picture" style="width: 600px !important; height: 400px  !important; object-fit: cover  !important;" alt="@Model.Name">
+            <div class="product-action">
+@*                 <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+ *@                @* <a class="btn btn-outline-dark btn-square" asp-area="" asp-area="" asp-controller="Home" asp-action="PhoneDetail"><i class="fa fa-search"></i></a> *@
+                <a class="btn-show-details btn btn-outline-dark btn-square" href="@Url.Action("PhoneDetail", "Home", new { id = Model.Id, name = Model.Name, brand = Model.Brand, ram = Model.Ram, rom = Model.Rom, price = Model.Price, discount = Model.Discount, color = Model.Color, picture = Model.Picture })"><i class="fa fa-search"></i></a>
+            </div>
+        </div>
+        <div class="text-center py-2">
+            <a class="h5 text-decoration-none text-truncate" href="@Url.Action("PhoneDetail", "Home", new { id = Model.Id, name = Model.Name, brand = Model.Brand, ram = Model.Ram, rom = Model.Rom, price = Model.Price, discount = Model.Discount, color = Model.Color, picture = Model.Picture })">@Model.Brand @Model.Name</a>
+            <div class="py-2 d-flex align-items-center justify-content-center mt-2">
+                <h6>Rom: @Model.Rom GB</h6>
+                <h6 class="ms-2">Ram: @Model.Ram GB</h6>
+            </div>
+            <div class="d-flex align-items-center justify-content-center mt-2">
+                <h5>$@Model.Price</h5>
+                @if (Model.Discount > 0)
+                {
+                    <h6 class="text-muted ms-2"><del>$@Math.Round(Model.Price / (1 - Model.Discount / 100), 2)</del></h6>
+                }
+            </div>
+        </div>
+    </div>
+</div>

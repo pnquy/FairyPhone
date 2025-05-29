@@ -1,0 +1,46 @@
+﻿@{
+	Layout = "../Shared/_AdminLayout.cshtml";
+}
+@model List<Invoice>
+
+@section Styles {
+		<link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	<h1 class="h2">Thông tin hóa đơn</h1>
+</div>
+
+<!-- Placeholder content for each section -->
+<div id="productContent">
+	<div class="table-title">Danh mục hóa đơn</div>
+	<!-- Table with search and sort functionality -->
+	<table id="example" class="table table-striped" style="width:100%">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>User ID</th>
+				<th>Total Amount</th>
+				<th>Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+
+			{
+					<tr>
+							<td>@item.Id</td>
+							<td>@item.UserId</td>
+							<td>@item.TotalAmount</td>
+							<td>@item.created_at</td>
+					</tr>
+			}
+		</tbody>
+	</table>
+</div>
+@section Scripts {
+		<script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+		<script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+		<script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+		<script defer src="~/js/Admin/crud.js"></script>
+}

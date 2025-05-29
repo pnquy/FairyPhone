@@ -1,0 +1,16 @@
+﻿.logout_dropdown {
+    /* border: 1px black solid; */
+}
+
+.bl {
+    border: 1px solid black;
+}
+
+.btn-disable-hover:hover {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+#cart img {
+
+}

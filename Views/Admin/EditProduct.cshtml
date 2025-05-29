@@ -1,0 +1,117 @@
+﻿@{
+    ViewData["Title"] = "EditProduct";
+}
+@{
+
+    Layout = "../Shared/_AdminLayout.cshtml";
+}
+
+@model FairyPhone.Models.Smartphone
+
+<h1>Edit Product</h1>
+<!-- Bootstrap Modal -->
+<div id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <a asp-controller="Admin" asp-action="RedirectToInfo"  class="info-button">Close</a>
+
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your form controls here -->
+                <input type="hidden" id="Id" class="form-control" value="@Model.Id">
+
+                <label for="Name">Name:</label>
+                <input type="text" id="Name" class="form-control" value="@Model.Name">
+
+                <label for="Brand">Brand:</label>
+                <input type="text" id="Brand" class="form-control"value="@Model.Brand">
+
+                <label for="Ram">Ram:</label>
+                <input type="text" id="Ram" class="form-control" value="@Model.Ram">
+
+                <label for="Rom">Rom:</label>
+                <input type="text" id="Rom" class="form-control"value="@Model.Rom">
+
+                <label for="Price">Price:</label>
+                <input type="text" id="Price" class="form-control"value="@Model.Price">
+
+                <label for="Discount">Discount:</label>
+                <input type="text" id="Discount" class="form-control"value="@Model.Discount">
+
+                <label for="Color">Color:</label>
+                <input type="text" id="Color" class="form-control"value="@Model.Color">
+
+                <label for="Picture">Product Image</label>
+                <input type="file" id="Picture" name="Picture" class="form-control" />
+            </div>
+            <div class="modal-footer">
+                <a onclick="deleteUser()" class="btn btn-primary">Delete</a>
+                <a onclick="submitForm()" class="btn btn-primary">Submit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery
+    <script>
+        var token = '@(antiforgery.GetAndStoreTokens(Context).RequestToken)';
+
+        function submitForm() {
+            var formData = new FormData();
+            formData.append("Id", $('#Id').val());
+            formData.append("Name", $('#Name').val());
+            formData.append("Brand", $('#Brand').val());
+            formData.append("Ram", $('#Ram').val());
+            formData.append("Rom", $('#Rom').val());
+            formData.append("Price", $('#Price').val());
+            formData.append("Discount", $('#Discount').val());
+            formData.append("Color", $('#Color').val());
+
+            var fileInput = document.getElementById('Picture');
+            if (fileInput.files.length > 0) {
+                formData.append("Picture", fileInput.files[0]);
+            }
+
+            $.ajax({
+                url: '/Admin/UpdateProduct',
+                type: 'POST',
+                headers: {
+                    'RequestVerificationToken': token
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result, textResult, xhr) {
+                    alert(result);
+                    window.location.href = '/Admin/ProductCRUD';
+                },
+            });
+        }
+
+        function deleteUser() {
+            var data = {
+                Id: $('#Id').val(),
+                Name: $('#Name').val(),
+                Brand: $('#Brand').val(),
+                Ram: $('#Ram').val(),
+                Rom: $('#Rom').val(),
+                Price: $('#Price').val(),
+                Discount: $('#Discount').val(),
+                Color: $('#Color').val(),
+            };
+            $.ajax({
+                url: '/Admin/DeleteProduct',
+                type: 'POST',
+                data: data,
+                success: function (result, textResult, xhr) {
+                    alert(result);
+                    window.location.href = '/Admin/ProductCRUD';
+                },
+            });
+        };
+    </script>
+}

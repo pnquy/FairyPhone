@@ -1,0 +1,52 @@
+﻿@section Links {
+    <link href="http://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Sản phẩm</h1>
+</div>
+
+<!-- Placeholder content for each section -->
+<div id="productContent">
+    <div class="table-title">Danh mục sản phẩm</div>
+    <!-- Table with search and sort functionality -->
+    <table id="productTable" class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="sortable">ID</th>
+                <th class="sortable">Name</th>
+                <th class="sortable">Price</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Product A</td>
+                <td>$100.00</td>
+                <!-- Add more rows as needed -->
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Product B</td>
+                <td>$150.00</td>
+                <!-- Add more rows as needed -->
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="userContent">
+    <h2>User Content</h2>
+    <!-- Add your content for the User section here -->
+</div>
+
+<div id="revenueContent">
+    <h2>Revenue Content</h2>
+    <!-- Add your content for the Revenue section here -->
+</div>
+
+@section Scripts {
+    <script src="~/js/Admin/crud.js"></script>
+    <script src="http://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+}

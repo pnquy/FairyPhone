@@ -1,0 +1,78 @@
+﻿@{
+	Layout = "../Shared/_AdminLayout.cshtml";
+}
+@model List<User>
+
+@section Styles {
+		<link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	<h1 class="h2">Thông tin người dùng</h1>
+</div>
+
+<!-- Placeholder content for each section -->
+<div id="productContent">
+	<div class="table-title">Danh mục user</div>
+	<!-- Table with search and sort functionality -->
+	<table id="example" class="table table-striped" style="width:100%">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Username</th>
+				<th>Password</th>
+				<th>Full Name</th>
+				<th>Email</th>
+				<th>Phone Number</th>
+				<th>Province/City</th>
+				<th>District</th>
+				<th>Ward</th>
+				<th>Specific Address</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+
+			{
+					<tr>
+							<td>@item.Id</td>
+							<td>@item.Username</td>
+							<td>@item.Password</td>
+							<td>@item.Full_Name</td>
+							<td>@item.Email</td>
+							<td>@item.Phone_Number</td>
+							<td>@item.Province_City</td>
+							<td>@item.District</td>
+							<td>@item.Ward</td>
+							<td>@item.Specific_Address</td> 
+							<td>
+						@Html.ActionLink("Edit", "EditUser", "Admin",
+            new
+            {
+                Id = item.Id,
+                Username = item.Username,
+                Password = item.Password,
+                Full_Name = item.Full_Name,
+                Email = item.Email,
+                Phone_Number = item.Phone_Number,
+                Province_City = item.Province_City,
+                District = item.District,
+                Ward = item.Ward,
+                Specific_Address = item.Specific_Address
+            },
+            new { @class = "btn btn-primary btn-sm" })
+			</td> 
+
+					</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+@section Scripts {
+		<script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+		<script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+		<script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+		<script defer src="~/js/Admin/crud.js"></script>
+}

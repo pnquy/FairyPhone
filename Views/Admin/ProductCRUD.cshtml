@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "../Shared/_AdminLayout.cshtml";
+}
+@model List<Smartphone>
+
+@section Styles {
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Sản phẩm</h1>
+</div>
+
+<!-- Placeholder content for each section -->
+<div id="productContent">
+    <div class="table-title">Danh mục sản phẩm</div>
+    <!-- Table with search and sort functionality -->
+    <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Ram</th>
+                <th>Rom</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Color</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach( var item in Model)
+            {
+                 <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Brand</td>
+                    <td>@item.Ram</td>
+                    <td>@item.Rom</td>
+                    <td>@item.Price</td>
+                    <td>@item.Discount</td>
+                    <td>@item.Color</td>
+                        <td>@Html.ActionLink("Edit", "EditProduct", "Admin",
+            new
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Brand = item.Brand,
+                Ram = item.Ram,
+                Rom = item.Rom,
+                Price = item.Price,
+                Discount = item.Discount,
+                Color = item.Color,
+            },
+            new { @class = "btn btn-primary btn-sm" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="CreateProduct" class="btn btn-primary">Add</a>
+</div>
+
+@section Scripts {
+    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script defer src="~/js/Admin/crud.js"></script>
+}
