@@ -1,23 +1,4 @@
-# ASP.NET Core MVC Application
 
-Welcome to your ASP.NET Core MVC (Model-View-Controller) application! This README provides a brief overview of your project, its structure, and instructions for setting up and running the application.
-
-## Project Overview
-
-### Purpose
-This project is built using ASP.NET Core MVC, a cross-platform, high-performance framework for building modern, cloud-based, and internet-connected applications. The MVC architectural pattern is employed to separate concerns and facilitate code organization.
-
-### Features
-- **Model-View-Controller Architecture:** Organizes the application into three main components for better separation of concerns.
-- **Razor Views:** Leverage Razor syntax for creating dynamic views.
-- **Entity Framework Core:** Use Entity Framework Core for data access and database operations.
-- **Dependency Injection:** Promote loose coupling and maintainability through dependency injection.
-- **Middleware:** Employ middleware components for handling requests and responses.
-- **Routing:** Define URL routes to map requests to controllers and actions.
-- **Authentication and Authorization:** Implement user authentication and authorization for secure access.
-- **Logging:** Utilize logging for tracking application behavior and troubleshooting.
-
-## Getting Started
 
 ### Prerequisites
 - [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)

@@ -33,50 +33,57 @@ namespace FairyPhone.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult SignUp(User modelSignUp)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Username == modelSignUp.Username || u.Email == modelSignUp.Email);
-            bool usernameExists = user != null && user.Username == modelSignUp.Username;
-            bool emailExists = user != null && user.Email == modelSignUp.Email;
-
-            if (user == null)
+            // Kiểm tra đầu vào
+            if (!ModelState.IsValid)
             {
+                return View("~/Views/Home/SignUp.cshtml", modelSignUp);
+            }
 
-                User newUser = new User
+            // Kiểm tra username hoặc email đã tồn tại
+            var existingUser = _dbContext.Users.FirstOrDefault(u => u.Username == modelSignUp.Username || u.Email == modelSignUp.Email);
+
+            if (existingUser != null)
+            {
+                if (existingUser.Username == modelSignUp.Username)
                 {
-                    Username = modelSignUp.Username,
-                    Password = modelSignUp.Password,
-                    Full_Name = modelSignUp.Full_Name,
-                    Email = modelSignUp.Email,
-                    Phone_Number = modelSignUp.Phone_Number,
-                    Province_City = modelSignUp.Province_City,
-                    District = modelSignUp.District,
-                    Ward = modelSignUp.Ward,
-                    Specific_Address = modelSignUp.Specific_Address
-                };
+                    ViewData["ValidateMessage"] = "Username already exists";
+                }
+                else if (existingUser.Email == modelSignUp.Email)
+                {
+                    ViewData["ValidateMessage"] = "Email already exists";
+                }
 
-                _dbContext.Users.Add(newUser);
-                _dbContext.SaveChanges();
-
-                int newUserId = newUser.Id;
-
-                HttpContext.Session.SetString("UserId", newUserId.ToString());
-                HttpContext.Session.SetString("FullName", newUser.Full_Name);
-
-
-                return RedirectToAction("Index", "Home");
+                return View("~/Views/Home/SignUp.cshtml", modelSignUp);
             }
-            else if (usernameExists)
+
+            // Nếu không tồn tại => tạo user mới
+            var newUser = new User
             {
-                ViewData["ValidateMessage"] = "Username already exists";
-            }
-            else if (emailExists)
-            {
-                ViewData["ValidateMessage"] = "Email already exists";
-            }
+                Username = modelSignUp.Username,
+                Password = modelSignUp.Password, // 👉 NÊN dùng mã hóa ở môi trường thật
+                Full_Name = modelSignUp.Full_Name,
+                Email = modelSignUp.Email,
+                Phone_Number = modelSignUp.Phone_Number,
+                Province_City = modelSignUp.Province_City,
+                District = modelSignUp.District,
+                Ward = modelSignUp.Ward,
+                Specific_Address = modelSignUp.Specific_Address
+            };
 
-            return View();
+            _dbContext.Users.Add(newUser);
+            _dbContext.SaveChanges();
+
+            // Đăng nhập ngay
+            HttpContext.Session.SetString("UserId", newUser.Id.ToString());
+            HttpContext.Session.SetString("FullName", newUser.Full_Name);
+
+            return RedirectToAction("Index", "Home");
         }
+
 
 
     }
