@@ -148,13 +148,23 @@ namespace FairyPhone.Controllers
         public IActionResult Success()
         {
             var userId = int.Parse(HttpContext.Session.GetString("UserId"));
-            List<Cart> carts = _context.Carts.Include(c => c.Smartphone).Include(c => c.User).Where(c => c.User_Id == userId).ToList();
+            List<Cart> carts = _context.Carts
+                .Include(c => c.Smartphone)
+                .Include(c => c.User)
+                .Where(c => c.User_Id == userId && !c.IsCheckedOut) // ✅ Chỉ lấy cart chưa thanh toán
+                .ToList();
+
+            if (carts == null || carts.Count == 0)
+            {
+                return RedirectToAction("Cart", "Home");
+            }
 
             var newInvoice = new Invoice
             {
-                UserId = userId, 
-                TotalAmount = carts.Sum(cart => (Math.Round((cart.Smartphone.Price * (1 - cart.Smartphone.Discount / 100)) * 100, 3)) * cart.Quantity), 
-                created_at = DateTime.Now, 
+                UserId = userId,
+                TotalAmount = carts.Sum(cart =>
+                    (Math.Round((cart.Smartphone.Price * (1 - cart.Smartphone.Discount / 100)) * 100, 3)) * cart.Quantity),
+                created_at = DateTime.Now,
             };
             _context.Invoices.Add(newInvoice);
             _context.SaveChanges();
@@ -167,8 +177,12 @@ namespace FairyPhone.Controllers
                     PhoneId = cart.Phone_Id,
                     Quantity = cart.Quantity
                 };
-
                 _context.InvoiceItems.Add(invoiceItem);
+            }
+
+            foreach (var cart in carts)
+            {
+                cart.IsCheckedOut = true;
             }
 
             _context.SaveChanges();
@@ -176,15 +190,22 @@ namespace FairyPhone.Controllers
             return View();
         }
 
+
         public IActionResult Cart()
         {
             var userIdString = HttpContext.Session.GetString("UserId");
             int.TryParse(userIdString, out int userId);
 
-            List<Cart> carts = _context.Carts.Include(c => c.Smartphone).Include(c => c.User).Where(c => c.User_Id == userId).ToList();
+            List<Cart> carts = _context.Carts
+                .Include(c => c.Smartphone)
+                .Include(c => c.User)
+                .Where(c => c.User_Id == userId && !c.IsCheckedOut)
+                .ToList();
+
             _logger.LogInformation("This is cart");
             return View(carts);
         }
+
 
         public IActionResult PhoneDetail(int id, string? name, string? brand, int ram, int rom, decimal price, decimal discount, string? color, string? picture)
         {
@@ -245,15 +266,17 @@ namespace FairyPhone.Controllers
             var userIdString = HttpContext.Session.GetString("UserId");
             if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
             {
-                // User not logged in or invalid user ID
                 return RedirectToAction("Cart", "Home");
             }
 
-            List<Cart> carts = _context.Carts.Include(c => c.Smartphone).Include(c => c.User).Where(c => c.User_Id == userId).ToList();
+            List<Cart> carts = _context.Carts
+                .Include(c => c.Smartphone)
+                .Include(c => c.User)
+                .Where(c => c.User_Id == userId && !c.IsCheckedOut) // ✅ Chỉ lấy cart chưa thanh toán
+                .ToList();
 
             if (carts == null || carts.Count == 0)
             {
-                // Cart is empty, redirect to cart page or show error
                 return RedirectToAction("Cart", "Home");
             }
 
@@ -282,6 +305,7 @@ namespace FairyPhone.Controllers
                 };
                 options.LineItems.Add(sessionLineItem);
             }
+
             var service = new SessionService();
             var session = service.Create(options);
             Response.Headers.Add("Location", session.Url);
