@@ -12,7 +12,7 @@ namespace FairyPhone.Controllers
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
-            if(claimUser.Identity.IsAuthenticated)
+            if (claimUser.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -48,6 +48,11 @@ namespace FairyPhone.Controllers
 
             ViewData["ValidateMessage"] = "User not found";
             return View("Admin/Index", "_AdminLayout");
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("SignIn", "Admin");
         }
     }
 }
